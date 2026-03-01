@@ -40,10 +40,10 @@ plese remove XXXXXXXXX & put your mobile id
 ```json
 "custom/mobile": {
     "format": "{text}",
-    "exec": "~/.local/bin/mobile",
+    "exec": "~/.config/waybar/scripts/mobile.sh",
     "interval": 30,
     "return-type": "json",
-    "on-click": "~/.local/bin/mobile --ping" 
+    "on-click": "~/.config/waybar/scripts/mobile.sh --ping" 
 }
 ````
 
