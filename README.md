@@ -2,6 +2,7 @@
 
 A sleek and lightweight script to display your mobile phone's battery status directly in [Waybar](https://github.com/Alexays/Waybar) using **KDE Connect**.
 
+![alt text](image.png)
 
 ---
 
@@ -29,7 +30,7 @@ Follow these simple steps to install the script:
 
 1. Clone or open the repository folder:  
 ```bash
-cd mobile_charge_indicator_wayba
+cd mobile_charge_indicator_waybar
 ```
 
 Make the installer executable:
