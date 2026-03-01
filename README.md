@@ -1,3 +1,5 @@
+[🇸🇦 Read in Arabic (عربي)](README_AR.md) | [🇬🇧 Read in English](README.md)
+
 # 📱 Mobile Charge Indicator for Waybar
 
 A sleek and lightweight script to display your mobile phone's battery status directly in [Waybar](https://github.com/Alexays/Waybar) using **KDE Connect**.
