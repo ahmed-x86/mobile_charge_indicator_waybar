@@ -43,7 +43,7 @@ plese remove XXXXXXXXX & put your mobile id
     "exec": "~/.local/bin/mobile",
     "interval": 30,
     "return-type": "json",
-    "on-click": "kdeconnect-cli -d XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX --ping" 
+    "on-click": "~/.local/bin/mobile --ping" 
 }
 ````
 
