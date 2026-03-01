@@ -100,7 +100,7 @@ Left-click the module on your bar at any time to ping your device.
 
  Ensure the KDE Connect daemon is running in the background and your device is properly paired.
 
-Tested and perfectly working with Waybar on Linux.
+Tested and perfectly working with Waybar on Archlinux.
 
 🤝 Support
 
