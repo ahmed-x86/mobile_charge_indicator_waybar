@@ -1,43 +1,58 @@
+# 📱 Mobile Charge Indicator for Waybar
 
+A sleek and lightweight script to display your mobile phone's battery status directly in [Waybar](https://github.com/Alexays/Waybar) using **KDE Connect**.
 
-# Mobile Charge Indicator for Waybar
-
-📱 Display your mobile battery status directly in Waybar using KDE Connect.
 
 ---
 
-## Installation
+## ✨ Features
 
-Follow these steps to install and run the script:
+* **Auto-Detection:** Automatically detects your connected phone's ID (No manual configuration needed!).
+* **Dynamic Colors:** Changes module color based on battery levels (Normal, Warning, Critical).
+* **Charging Indicator:** Displays a lightning icon (``) when the device is plugged in.
+* **Quick Ping:** Click the module directly in Waybar to ring/ping your misplaced phone.
 
-1. Open the folder:  
+---
+
+## 📦 Prerequisites
+
+Before installing, ensure you have the following installed on your system:
+* `kdeconnect` (Paired and connected with your mobile device)
+* `waybar`
+* A Nerd Font installed for the icons (e.g., *JetBrains Mono Nerd Font*).
+
+---
+
+## 🚀 Installation
+
+Follow these simple steps to install the script:
+
+1. Clone or open the repository folder:  
 ```bash
-cd mobile_charge_indicator_waybar
+cd mobile_charge_indicator_wayba
 ```
-2. Make the scripts executable:  
-```bash
+
+Make the installer executable:
+
+```Bash
 chmod +x install.sh  
-chmod +x install2.sh
 ```
+Run the installation script:
 
-3. Run the first installer:  
-```bash
+```Bash
 ./install.sh
 ```
 
-4. Run the second installer:  
-```bash
-./install2.sh
-```
+(This script will automatically copy mobile.sh to your ~/.config/waybar/scripts/ directory and make it executable).
+⚙️ Waybar Configuration
 
----
+Open your Waybar config file (usually ~/.config/waybar/config or config.jsonc).
 
-## Waybar Configuration
+Add "custom/mobile" to your modules-right, modules-center, or modules-left array.
 
-Add the following to your Waybar config file:
-plese remove XXXXXXXXX & put your mobile id
+Add the following module definition:
 
-```json
+```JSON
 "custom/mobile": {
     "format": "{text}",
     "exec": "~/.config/waybar/scripts/mobile.sh",
@@ -45,14 +60,12 @@ plese remove XXXXXXXXX & put your mobile id
     "return-type": "json",
     "on-click": "~/.config/waybar/scripts/mobile.sh --ping" 
 }
-````
+```
 
----
+🎨 Waybar Style
 
-## Waybar Style
-
-Open `~/.config/waybar/style.css` and add the following styles:
-
+Open your Waybar style file (usually ~/.config/waybar/style.css) and add the following snippet to customize the appearance:
+CSS
 ```css
 /* Mobile battery module */
 #custom-mobile {
@@ -64,36 +77,29 @@ Open `~/.config/waybar/style.css` and add the following styles:
 
 /* Colors based on battery status */
 #custom-mobile.critical {
-    color: #f07178;
+    color: #f07178; /* Red for low battery */
 }
 #custom-mobile.warning {
-    color: #f2cd66;
+    color: #f2cd66; /* Yellow for medium battery */
 }
 #custom-mobile.normal {
-    color: #c3e88d;
+    color: #c3e88d; /* Green for good battery */
 }
 ```
 
----
+💡 Usage
 
-## Usage
+Once installed and configured, simply restart Waybar. Your mobile battery status will now be visible.
 
-* After installation, your mobile battery status will appear in Waybar.
-* Click the module to ping your device via KDE Connect.
+Left-click the module on your bar at any time to ping your device.
 
----
+📝 Notes
 
-## Notes
+ Ensure the KDE Connect daemon is running in the background and your device is properly paired.
 
-* Make sure KDE Connect is installed and your device is paired.
-* Tested with Waybar on Linux with KDE Connect enabled.
+Tested and perfectly working with Waybar on Linux.
 
----
+🤝 Support
 
-## Support
-
-If you find this script useful, give it a ⭐ on GitHub!
-
-```
-
+If you find this script useful for your ricing setup, please consider giving it a ⭐ on GitHub!
 ---
