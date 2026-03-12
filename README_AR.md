@@ -1,5 +1,5 @@
 
-[🇸🇦 اقرأ بالعربية](README_AR.md) | [🇬🇧 Read in English](README.md)
+🇸🇦 اقرأ بالعربية | [🇬🇧 Read in English](README.md)
 
 # 📱 مؤشر شحن الهاتف لـ Waybar
 
