@@ -1,4 +1,4 @@
-[🇸🇦 Read in Arabic (عربي)](README_AR.md) | [🇬🇧 Read in English](README.md)
+[🇸🇦 Read in Arabic (عربي)](README_AR.md) | 🇬🇧 Read in English
 
 # 📱 Mobile Charge Indicator for Waybar
 
