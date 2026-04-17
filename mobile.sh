@@ -55,3 +55,4 @@ else
     
     echo "{\"text\": \"$INFO\", \"class\": \"$color\", \"tooltip\": \"Battery: $battery%\"}"
 fi
+# test
