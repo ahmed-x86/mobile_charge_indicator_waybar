@@ -4,6 +4,7 @@ PHONEID=$(kdeconnect-cli -l --id-only | head -n 1)
 ICON="" 
 LOW_BATTERY_THRESHOLD=20
 STATE_FILE="/tmp/phone_charging_state" 
+CACHE_FILE="/tmp/phone_last_battery" 
 
 send_notification() {
     notify-send -u critical -i "battery-low" "KDE Connect" " $1%"
@@ -57,42 +58,52 @@ fi
 battery=$(qdbus org.kde.kdeconnect /modules/kdeconnect/devices/$PHONEID/battery org.kde.kdeconnect.device.battery.charge 2>/dev/null)
 is_charging=$(qdbus org.kde.kdeconnect /modules/kdeconnect/devices/$PHONEID/battery org.kde.kdeconnect.device.battery.isCharging 2>/dev/null)
 
-if [ -z "$battery" ]; then
-    echo "{\"text\": \"$ICON --%\", \"class\": \"critical\"}"
+if [ -z "$battery" ] || [ "$battery" -lt 0 ]; then
+    
+    if [ -f "$CACHE_FILE" ]; then
+        battery=$(cat "$CACHE_FILE")
+    else
+        echo "{\"text\": \"$ICON --%\", \"class\": \"critical\", \"tooltip\": \"Waiting for data...\"}"
+        exit 0
+    fi
 else
-    if [ -f "$STATE_FILE" ]; then
-        PREV_STATE=$(cat "$STATE_FILE")
-        if [ "$PREV_STATE" == "true" ] && [ "$is_charging" == "false" ]; then
-            send_discharged_notification
-        elif [ "$PREV_STATE" == "false" ] && [ "$is_charging" == "true" ]; then
-            send_charging_notification
-        fi
-        # ---------------------------------
-    fi
-    echo "$is_charging" > "$STATE_FILE"
-
-    if [ "$battery" -le "$LOW_BATTERY_THRESHOLD" ] && [ "$is_charging" != "true" ]; then
-        if [ ! -f "/tmp/phone_low_bat_notified" ]; then
-            send_notification "$battery"
-            touch "/tmp/phone_low_bat_notified"
-        fi
-    elif [ "$battery" -gt "$LOW_BATTERY_THRESHOLD" ]; then
-        rm -f "/tmp/phone_low_bat_notified"
-    fi
-    if [ "$battery" -le 20 ]; then
-        color="critical"
-    elif [ "$battery" -le 50 ]; then
-        color="warning"
-    else
-        color="normal"
-    fi
-
-
-    if [ "$is_charging" == "true" ]; then
-        INFO="$ICON  $battery%"
-        rm -f "/tmp/phone_low_bat_notified"
-    else
-        INFO="$ICON $battery%"
-    fi
-    echo "{\"text\": \"$INFO\", \"class\": \"$color\", \"tooltip\": \"Battery: $battery%\"}"
+   
+    echo "$battery" > "$CACHE_FILE"
 fi
+
+
+if [ -f "$STATE_FILE" ]; then
+    PREV_STATE=$(cat "$STATE_FILE")
+    if [ "$PREV_STATE" == "true" ] && [ "$is_charging" == "false" ]; then
+        send_discharged_notification
+    elif [ "$PREV_STATE" == "false" ] && [ "$is_charging" == "true" ]; then
+        send_charging_notification
+    fi
+fi
+echo "$is_charging" > "$STATE_FILE"
+
+if [ "$battery" -le "$LOW_BATTERY_THRESHOLD" ] && [ "$is_charging" != "true" ]; then
+    if [ ! -f "/tmp/phone_low_bat_notified" ]; then
+        send_notification "$battery"
+        touch "/tmp/phone_low_bat_notified"
+    fi
+elif [ "$battery" -gt "$LOW_BATTERY_THRESHOLD" ]; then
+    rm -f "/tmp/phone_low_bat_notified"
+fi
+
+if [ "$battery" -le 20 ]; then
+    color="critical"
+elif [ "$battery" -le 50 ]; then
+    color="warning"
+else
+    color="normal"
+fi
+
+if [ "$is_charging" == "true" ]; then
+    INFO="$ICON  $battery%"
+    rm -f "/tmp/phone_low_bat_notified"
+else
+    INFO="$ICON $battery%"
+fi
+
+echo "{\"text\": \"$INFO\", \"class\": \"$color\", \"tooltip\": \"Battery: $battery%\"}"
